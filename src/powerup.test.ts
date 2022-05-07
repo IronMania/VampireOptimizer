@@ -12,17 +12,18 @@ describe('Might', () => {
     });
 
     test('initial price is 200', () => {
-      expect(new Might().currentPrice()).toBe(200);
-
-    });
-    test(' pricate after purchase is 440', () => {
-      expect(new Might().purchase().currentPrice()).toBe(440);
+      expect(new Might().initialBasePrice).toBe(200);
 
     });
 
-    test(' level after purchase is 1', () => {
-      expect(new Might().purchase().currentLevel()).toBe(1);
+    test('level 1 Price is calculated correctly with 2 prepurchases', () => {
+      expect(new Might().setLevel(1).currentPrice(2)).toBe(240);
 
     });
-    
+
+    test('level 2 Price is calculated correctly with 1 prepurchases', () => {
+      expect(new Might().setLevel(2).currentPrice(1)).toBe(700);
+
+    });
+
   });
