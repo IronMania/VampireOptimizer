@@ -25,7 +25,7 @@ describe('Powerup Selection', () => {
     test('will have the correct Name', () => {
       const selection = new PowerupSelection()
       const powerups = selection.Powerups
-      expect(powerups[0].Name).toBe("Might");
+      expect(powerups[0].name).toBe("Might");
     });
 
     test('can set Might level', () => {

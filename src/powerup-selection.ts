@@ -1,8 +1,8 @@
-import { Armor, Might, PowerUp } from "./powerup";
+import { PowerUp } from "./powerups/powerup";
 
 export class PowerupSelection{
 
-  constructor(  private powerups: PowerUp[] = [new Might(), new Armor()]){
+  constructor(  private powerups: PowerUp[] = [new PowerUp(0, 200, "Might"), new PowerUp(0, 600, "Armor")]){
     
   }
 
@@ -12,7 +12,7 @@ export class PowerupSelection{
   }
 
   setPowerupLevel(name: string, newLevel: number) {
-    const index = this.powerups.findIndex((foo) => foo.Name === name)
+    const index = this.powerups.findIndex((foo) => foo.name === name)
     const newInstance = new (this.constructor as new () => this)()
     newInstance.powerups = this.powerups
     newInstance.powerups[index]= this.powerups[index].setLevel(newLevel)
