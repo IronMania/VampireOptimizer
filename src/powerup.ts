@@ -1,9 +1,14 @@
 export abstract class PowerUp{
-  private level: number = 0
+  
+
+  constructor(private level: number = 0){}
 
   setLevel(newLevel: number): PowerUp {
-    this.level = newLevel
-    return this
+    
+    //this.level = newLevel
+    const powerup = new (this.constructor as new () => this)()
+    powerup.level = newLevel
+    return powerup
   }
   public get Level(){return this.level}
 
@@ -35,21 +40,9 @@ export class Might extends PowerUp{
     return "Might"
   }
 
-  private purchases = 0;
-  constructor(purchases?: number){
-    super();
-    if(!purchases){
-      this.purchases = 0
-    }else{
-      this.purchases = purchases
-    }
-    
+  constructor(){
+    super()
   }
-
- currentLevel(): Number {
-  return this.purchases
-}
-
 
 }
 
