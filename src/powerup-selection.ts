@@ -1,37 +1,36 @@
 import { PowerUp } from "./powerups/powerup";
 
-export class PowerupSelection{
+export class PowerupSelection {
 
-  constructor(  private powerups: PowerUp[] = [new PowerUp(0, 200, "Might"), new PowerUp(0, 600, "Armor")]){
-    
+  constructor(private powerups: PowerUp[]) {
+
   }
 
 
-  get Powerups(){
+  get Powerups() {
     return this.powerups
   }
 
   setPowerupLevel(name: string, newLevel: number) {
     const index = this.powerups.findIndex((foo) => foo.name === name)
-    const newInstance = new (this.constructor as new () => this)()
-    newInstance.powerups = this.powerups
-    newInstance.powerups[index]= this.powerups[index].setLevel(newLevel)
+    const newInstance = new PowerupSelection(this.powerups)
+    newInstance.powerups[index] = this.powerups[index].setLevel(newLevel)
     return newInstance
   }
 
   diffOverallCost(name: string, newLevel: number) {
     const currentCost = this.overallCost()
     const newCost = this.setPowerupLevel(name, newLevel).overallCost()
-    return  newCost - currentCost;
+    return newCost - currentCost;
   }
 
 
   overallCost(): number {
-    const reduce = this.powerups.sort((a,b) => b.initialBasePrice - a.initialBasePrice).reduce((aggregate, current) => {
+    const reduce = this.powerups.sort((a, b) => b.initialBasePrice - a.initialBasePrice).reduce((aggregate, current) => {
       const price = current.currentPrice(aggregate.purchases)
-      return {purchases: current.Level, sum: aggregate.sum + price}
-    }, 
-      {purchases: 0, sum: 0});
+      return { purchases: current.Level, sum: aggregate.sum + price }
+    },
+      { purchases: 0, sum: 0 });
     return reduce.sum
   }
 }
