@@ -13,7 +13,7 @@ describe('Might', () => {
   });
 
   test('initial price is 200', () => {
-    expect(might.initialBasePrice).toBe(200);
+    expect(might.props.initialBasePrice).toBe(200);
 
   });
 

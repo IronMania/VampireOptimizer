@@ -54,7 +54,6 @@ describe('Powerup Selection', () => {
       const selection = PowerupSelectionFactory.create()
       selection.setPowerupLevel("Armor",1)
       selection.setPowerupLevel("Might",1)
-      const powerups = selection.Powerups
       expect(selection.overallCost()).toBe(820);
     });
 
