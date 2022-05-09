@@ -1,7 +1,7 @@
 import React from "react";
 import { PowerUp } from "./powerups/powerup";
 
-export class PowerupSelection extends React.Component<{}> {
+export class PowerupSelection extends React.Component<{}, {overallCosts: number}> {
 
   private powerups: PowerUp[] = [
     new PowerUp(200, "Might", 5),
@@ -26,7 +26,7 @@ export class PowerupSelection extends React.Component<{}> {
   ]
 
   constructor(props: {} = {}) {
-    super({})
+    super(props)
   }
 
   get Powerups() {
@@ -35,10 +35,13 @@ export class PowerupSelection extends React.Component<{}> {
 
   setPowerupLevel(name: string, newLevel: number) {
     const index = this.powerups.findIndex((powerup) => powerup.name === name)
-    const newInstance = new PowerupSelection()
-    newInstance.powerups = this.powerups
-    newInstance.powerups[index] = this.powerups[index].setLevel(newLevel)
-    return newInstance
+    this.powerups[index] = this.powerups[index].setLevel(newLevel)
+    this.setState({overallCosts: this.overallCost()})
+    return this
+    //const newInstance = new PowerupSelection()
+    //newInstance.powerups = this.powerups
+    //newInstance.powerups[index] = this.powerups[index].setLevel(newLevel)
+    //return newInstance
   }
 
   diffOverallCost(name: string, newLevel: number) {
@@ -49,7 +52,7 @@ export class PowerupSelection extends React.Component<{}> {
 
 
   overallCost(): number {
-    const reduce = this.powerups.sort((a, b) => b.props.initialBasePrice - a.props.initialBasePrice).reduce((aggregate, current) => {
+    const reduce = this.powerups.sort((a, b) => b.initialBasePrice - a.initialBasePrice).reduce((aggregate, current) => {
       const price = current.currentPrice(aggregate.purchases)
       return { purchases: aggregate.purchases + current.Level, sum: aggregate.sum + price }
     },
@@ -60,7 +63,7 @@ export class PowerupSelection extends React.Component<{}> {
   render(){
     return <div>
       <h1>Overall costs: {this.overallCost()}</h1>
-      {this.Powerups.map((powerup) =>powerup.render())}
+      {this.Powerups.map((powerup) => <div key={powerup.name}>{powerup.name} {powerup.Level} {powerup.maxLevel} <button onClick={() => this.setPowerupLevel(powerup.name, powerup.Level + 1)}>+</button><button onClick={() => this.setPowerupLevel(powerup.name, powerup.Level - 1)}>-</button></div>)}
     </div>;
   }
 }

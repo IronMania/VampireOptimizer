@@ -6,10 +6,10 @@ import { PowerUp } from './powerups/powerup';
 import { PowerupSelection } from './powerup-selection';
 
 function App() {
-  let powerupSelection = PowerupSelectionFactory.create()
+  //let powerupSelection = PowerupSelectionFactory.create()
 
   function increaseLevel(powerup: PowerUp){
-    powerupSelection = powerupSelection.setPowerupLevel(powerup.name, powerup.Level +1)
+    //powerupSelection = powerupSelection.setPowerupLevel(powerup.name, powerup.Level +1)
   }
 
   return (

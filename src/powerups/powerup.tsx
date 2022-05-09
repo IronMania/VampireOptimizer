@@ -1,31 +1,35 @@
 import React from "react"
 
-export class PowerUp extends React.Component<{initialBasePrice: number, name: string, maxLevel: number, level: number}>  {
+export class PowerUp  {
 
-  constructor(initialBasePrice: number, name: string, maxLevel: number, level: number = 0) {
-    super({initialBasePrice: initialBasePrice, name: name, maxLevel: maxLevel, level: level})
+  constructor(public readonly initialBasePrice: number, public readonly name: string, public readonly maxLevel: number, private level: number = 0) {
    }
 
   setLevel(newLevel: number): PowerUp {
-    return new PowerUp(this.props.initialBasePrice, this.props.name, this.props.maxLevel, newLevel)
+    if(newLevel >= this.maxLevel){
+      return new PowerUp(this.initialBasePrice, this.name, this.maxLevel, this.maxLevel)  
+    }
+
+    if(newLevel <= 0){
+      return new PowerUp(this.initialBasePrice, this.name, this.maxLevel, 0)  
+    }
+    return new PowerUp(this.initialBasePrice, this.name, this.maxLevel, newLevel)
   }
-  public get Level() { return this.props.level }
-  public get name() { return this.props.name }
-  public get maxLevel() { return this.props.maxLevel }
+  public get Level() { return this.level }
 
 
   currentPrice(prePurchases: number) {
-    const purchaseModifier = this.props.initialBasePrice * 0.1
+    const purchaseModifier = this.initialBasePrice * 0.1
     let price = 0
-    for (let i = 0; i < this.props.level; i++) {
-      price = 2 * price + this.props.initialBasePrice + ((i * 2 + prePurchases) * purchaseModifier)
+    for (let i = 0; i < this.level; i++) {
+      price = 2 * price + this.initialBasePrice + ((i * 2 + prePurchases) * purchaseModifier)
     }
 
     return price
   };
 
   increaseLevel() {
-    this.setState({initialBasePrice: this.props.initialBasePrice, name: this.props.name, maxLevel: this.props.maxLevel, level: this.props.level + 1})
+    return new PowerUp(this.initialBasePrice, this.name, this.maxLevel, this.Level + 1)
   }
 
   render(){

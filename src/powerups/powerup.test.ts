@@ -13,7 +13,7 @@ describe('Might', () => {
   });
 
   test('initial price is 200', () => {
-    expect(might.props.initialBasePrice).toBe(200);
+    expect(might.initialBasePrice).toBe(200);
 
   });
 
@@ -24,6 +24,16 @@ describe('Might', () => {
 
   test('level 2 Price is calculated correctly with 1 prepurchases', () => {
     expect(might.setLevel(2).currentPrice(1)).toBe(700);
+
+  });
+
+  test('set level to more than max level will set to max level', () => {
+    expect(might.setLevel(5).Level).toBe(3);
+
+  });
+
+  test('set level to more than max level will set to max level', () => {
+    expect(might.setLevel(-1).Level).toBe(0);
 
   });
 
